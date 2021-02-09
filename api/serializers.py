@@ -27,7 +27,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    user = ProductSerializer(many=True)
+    product = ProductSerializer()
+    user = UserSerializer()
     class Meta:
         model = CartItem
         fields = "__all__"
@@ -35,11 +36,9 @@ class CartItemSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         cart = CartItem.objects.create(
             product=validated_data['product'],
-            user=validated_data['user'],
+            user=self.context['request'].user,
             quantity=validated_data['quantity']
             )
         cart.save()
         return cart
-
-
-            
+           
