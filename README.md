@@ -92,6 +92,7 @@ you can get specific user object with passing the pk to the end of the path.
 **allowed methods** : POST
 **Access Level** : Authorized users
 **fields :** 'required': {'refresh_token'}
+
 ---
 # To-Do:
 - [x] add users and configurations
