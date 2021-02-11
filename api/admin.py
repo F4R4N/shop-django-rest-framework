@@ -3,8 +3,10 @@ from .models import Product, Category, CartItem, Profile
 from django.contrib.auth.models import User
 
 
-@admin.register(Product)
+@admin.register(Product)    
 class ProductAdmin(admin.ModelAdmin):
+    """ adding the product class to the admin site """
+
     list_display = ('name', "price", "quantity", "available", 'created',"discount")
     search_fields = ("name", "category",)
     date_hierarchy = "created"
@@ -14,8 +16,11 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    """ adding category class to the admin site """
     list_display = ("name", "slug", "is_lux")
     list_editable = ['is_lux']
     prepopulated_fields = {'slug': ("name",)}
+
+
 admin.site.register(CartItem)
 admin.site.register(Profile)

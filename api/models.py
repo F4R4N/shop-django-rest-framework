@@ -27,14 +27,14 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=150)
-    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=150, unique=True, null=False, blank=False )
+    slug = models.SlugField(unique=True, null=False, blank=False)
     category = models.ManyToManyField(Category, related_name='products')
     price = models.IntegerField()
     discount = models.IntegerField(default=0)
     available = models.BooleanField(default=True)
     quantity = models.IntegerField()
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=product_image)
     description = models.TextField()
@@ -57,7 +57,7 @@ class CartItem(models.Model):
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.user.username
+        return self.product.name
 
     def get_total_price(self):
         return self.quantity * self.product.price
