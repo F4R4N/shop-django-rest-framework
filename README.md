@@ -29,69 +29,69 @@ ___
 ## api/v1/
 ### api/v1/product/
 **Allowed Methods** : GET
-**Access Level** : Public
+<br>**Access Level** : Public
 return array of objects of all products in database that tagged as available. and also have a nested inner object of category that related to it as ForignKey relation.
 you can get specific product object with passing the pk to the end of the path.
 
 ### api/v1/category/
 **allowed methods** : GET
-**Access Level** : Public
+<br>**Access Level** : Public
 return objects of categories that admin made.
 you can get specific category object with passing the pk to the end of the path.
 
 ### api/v1/user/
 **allowed methods** : GET
-**Access Level** : Admin
+<br>**Access Level** : Admin
 return object of all registered users
 you can get specific user object with passing the pk to the end of the path.
 
 ### api/v1/cart/
 **allowed methods** : GET, POST
-**Access Level** : Authorized users
-*GET :* return all products in the authenticated user cart
-*POST :*
+<br>**Access Level** : Authorized users
+<br>*GET :* return all products in the authenticated user cart
+<br>*POST :* not finished yet.
 
 ## auth/
 ### auth/login/
 **allowed methods** : POST
-**Access Level** : Public
-**fields :** 'required': {'username', 'password'}
-*POST :* the data you post should include 'username' and 'password' fields if the user was authorized the access token and the refresh token will return as json.[more information about JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html#usage)
+<br>**Access Level** : Public
+<br>**fields :** 'required': {'username', 'password'}
+<br>*POST :* the data you post should include 'username' and 'password' fields if the user was authorized the access token and the refresh token will return as json.[more information about JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html#usage)
 
 #### auth/login/refresh/
 **allowed methods** : POST
-**Access Level** : Public
-**fields :** 'required': {'refresh'}
-*POST :* the data you post should include 'refresh' and the value of it should be refresh token that send when user login.
+<br>**Access Level** : Public
+<br>**fields :** 'required': {'refresh'}
+<br>*POST :* the data you post should include 'refresh' and the value of it should be refresh token that send when user login.
 
 ### auth/register/
 **allowed methods** : POST
-**Access Level** : Public
-**fields :** 'required': {'username', 'password1', 'password2', 'email', 'first_name', 'last_name'}
-*POST :* should include the 'fields' keys and proper value. errors and exeptions handled , should have a proper place to show them in frontend.
+<br>**Access Level** : Public
+<br>**fields :** 'required': {'username', 'password1', 'password2', 'email', 'first_name', 'last_name'}
+<br>*POST :* should include the 'fields' keys and proper value. errors and exeptions handled , should have a proper place to show them in frontend.
 
 ### auth/change_password/{pk}/
 **allowed methods** : PUT
-**Access Level** : Authorized users
-**fields :** 'required': {'old_password', 'password1', 'password2'}
-*PUT :* sould include 'fields' keys with proper values. errors and exeptions handled , should have a proper place to show them in frontend.
+<br>**Access Level** : Authorized users
+<br>**fields :** 'required': {'old_password', 'password1', 'password2'}
+<br>*PUT :* sould include 'fields' keys with proper values. errors and exeptions handled , should have a proper place to show them in frontend.
 
 ### auth/update_profile/{pk}/
 **allowed methods** : PUT
-**Access Level** : Authorized users
-**fields :** 'optional': {'username', 'first_name', 'last_name', 'email'}
-*PUT :* the uniqueness of email and username handeled.
+<br>**Access Level** : Authorized users
+<br>**fields :** 'optional': {'username', 'first_name', 'last_name', 'email'}
+<br>*PUT :* the uniqueness of email and username handeled.
 
 ### auth/logout/
 **allowed methods** : POST
-**Access Level** : Authorized users
-**fields :** 'required': {'refresh_token'}
-*POST :* post user refresh token to expire the access and refresh token of the given user.
+<br>**Access Level** : Authorized users
+<br>**fields :** 'required': {'refresh_token'}
+<br>*POST :* post user refresh token to expire the access and refresh token of the given user.
 
 ### auth/change_image/
 **allowed methods** : POST
-**Access Level** : Authorized users
-**fields :** 'required': {'refresh_token'}
+<br>**Access Level** : Authorized users
+<br>**fields :** 'required': {'refresh_token'}
 
 ---
 # To-Do:
