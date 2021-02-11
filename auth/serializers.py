@@ -50,7 +50,7 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password1'] != attrs['password2']:
-            raise serializers.ValidationError({'password1': "password field dont match !"})
+            raise serializers.ValidationError({'password1': "password fields dont match !"})
 
         return attrs
 
@@ -79,9 +79,9 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
         extra_kwargs = {
+            'username': {'required': False},
             'first_name': {'required': False},
             'last_name': {'required': False},
-            'image': {'required': False},
         }
 
     def validate_email(self, value):
