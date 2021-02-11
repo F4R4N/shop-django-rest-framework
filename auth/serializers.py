@@ -119,9 +119,3 @@ class UpdateUserImageSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ("image",)
         extra_kwargs = {'image': {'required': False}, }
-
-    # def create(self, validated_data):
-    #     profile = Profile.objects.create(validated_data["image"])
-
-    #     profile.save()
-    #     return profile.image
