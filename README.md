@@ -4,6 +4,7 @@ ___
 
 # To-Do:
 - [x] add users and configurations
+- [x] add cors and configurations
 - [ ] Make the cart
 - [x] Add JWT authentication ystem
 - [x] add product api
