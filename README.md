@@ -105,7 +105,10 @@ ___
 - [x] add users and configurations
 - [x] add cors and configurations
 - [ ] Make the cart
-- [x] Add JWT authentication ystem
+- [ ] calculate the quantity and valid products to buy
+- [ ] check for availability on get method for all products
+- [ ] add search option for product and category 
+- [x] Add JWT authentication system
 - [x] add product api
 - [ ] add billing part
 - [ ] beautify the code
