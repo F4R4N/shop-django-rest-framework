@@ -28,14 +28,11 @@ class UpdateProfileView(generics.UpdateAPIView):
     serializer_class = UpdateUserSerializer
 
 
-class UpdateUserImageView(generics.ListAPIView):
+class UpdateUserImageView(generics.UpdateAPIView):
     queryset = Profile.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateUserImageSerializer
-    def post(self, request):
-        image_file = request.data["image"]
-        image = Profile.objects.create(user=request.user, image=image_file)
-        return Response(status=status.HTTP_200_OK)
+
 
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
