@@ -30,20 +30,20 @@ ___
 ### api/v1/product/
 **Allowed Methods** : GET
 <br>**Access Level** : Public
-return array of objects of all products in database that tagged as available. and also have a nested inner object of category that related to it as ForignKey relation.
-you can get specific product object with passing the pk to the end of the path.
+<br>return array of objects of all products in database that tagged as available. and also have a nested inner object of category that related to it as ForignKey relation.
+<br>you can get specific product object with passing the pk to the end of the path.
 
 ### api/v1/category/
 **allowed methods** : GET
 <br>**Access Level** : Public
-return objects of categories that admin made.
-you can get specific category object with passing the pk to the end of the path.
+<br>return objects of categories that admin made.
+<br>you can get specific category object with passing the pk to the end of the path.
 
 ### api/v1/user/
 **allowed methods** : GET
 <br>**Access Level** : Admin
-return object of all registered users
-you can get specific user object with passing the pk to the end of the path.
+<br>return object of all registered users
+<br>you can get specific user object with passing the pk to the end of the path.
 
 ### api/v1/cart/
 **allowed methods** : GET, POST
