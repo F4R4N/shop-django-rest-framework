@@ -35,7 +35,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         user.set_password(validated_data['password1'])
         user.save()
-
+        profile = Profile.objects.create(user=user)
+        profile.save()
         return user
 
 
@@ -118,4 +119,16 @@ class UpdateUserImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ("image",)
-        extra_kwargs = {'image': {'required': False}, }
+        extra_kwargs = {'image': {'required': True}, }
+
+    def update(self, instance, validated_data):
+        user = self.context['request'].user
+        if user.pk != instance.pk:
+            raise serializers.ValidationError({"authorize": "you dont have permission for this user !"})
+        if 'image' in validated_data:
+            instance.image = validated_data['image']
+            instance.user = user
+            instance.save()
+            return instance
+        else:
+            raise serializers.ValidationsError({'not valid': 'the image field data is missing'})
