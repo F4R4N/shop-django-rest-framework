@@ -45,7 +45,7 @@ class Product(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    image = models.ImageField(upload_to=user_images)
+    image = models.ImageField(upload_to=user_images, default='profile/default/default.png')
 
     def __str__(self):
         return self.user.username
