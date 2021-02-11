@@ -89,9 +89,9 @@ ___
 <br>*POST :* post user refresh token to expire the access and refresh token of the given user.
 
 ### auth/change_image/
-**allowed methods** : POST
+**allowed methods** : PUT
 <br>**Access Level** : Authorized users
-<br>**fields :** 'required': {'refresh_token'}
+<br>**fields :** 'required': {'image'}
 
 ---
 # To-Do:
