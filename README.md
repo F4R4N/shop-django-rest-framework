@@ -15,6 +15,8 @@ a shop api with django rest framework
 	* [**api/v1/category/**](#apiv1category) 
 	* [**api/v1/user/**](#apiv1user) 
 	* [**api/v1/cart/**](#apiv1cart) 
+	* [**api/v1/cart/add/**](#apiv1cartadd) 
+
 
 * [**auth/**](#auth)
 	* [**auth/login/**](#authlogin)
@@ -49,7 +51,12 @@ ___
 **allowed methods** : GET, POST
 <br>**Access Level** : Authorized users
 <br>*GET :* return all products in the authenticated user cart
-<br>*POST :* not finished yet.
+
+### api/v1/cart/add/
+**allowed methods** : POST
+<br>**Access Level** : Authorized users
+<br>**fields :** 'required': {'quantity', 'product_id'}
+<br>*POST :* the data should include fields available if user authorized.
 
 ## auth/
 ### auth/login/
