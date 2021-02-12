@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Product, Category, CartItem, Profile
 from django.contrib.auth.models import User
-
+from django.shortcuts import get_object_or_404
 
 class CategorySerializer(serializers.ModelSerializer):
     """ serializer for categories that serialize all of the fields based on Category model"""
@@ -36,18 +36,30 @@ class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     class Meta:
         model = CartItem
-        fields = "__all__"
+        fields = ('quantity', 'product')
+
+
+
+class CartItemAddSerializer(serializers.ModelSerializer):
+    product_id = serializers.IntegerField()
+    class Meta:
+        model = CartItem
+        fields = ('quantity', 'product_id')
+        extra_kwargs = {
+            'quantity': {'required': True},
+            'product_id': {'required': True},
+        }
+
 
     def create(self, validated_data):
-        # TODO: edit the following two line
-        user = User.objects.get(self.context['request'].user.id)
-        product = Product.objects.get(validated_data['product'])
-        cart = CartItem.objects.create(
+        user = User.objects.get(id=self.context['request'].user.id)
+        product = get_object_or_404(Product, id=validated_data['product_id'])
+        cart_item = CartItem.objects.create(
             product=product,
             user=user,
             quantity=validated_data['quantity']
             )
 
-        cart.save()
-        return cart
-           
+        cart_item.save()
+        return cart_item
+        

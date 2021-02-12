@@ -5,10 +5,12 @@ router = routers.DefaultRouter()
 router.register('product', views.ProductView)
 router.register('user', views.UserView)
 router.register('category', views.CategoryView)
-router.register('cart', views.CartItemView)
+
 
 
 urlpatterns = [
     path('v1/', include(router.urls)),
+    path('v1/cart/', views.CartItemView.as_view()),
+    path('v1/cart/add/', views.CartItemAddView.as_view())
 ]
 
