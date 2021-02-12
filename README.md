@@ -87,24 +87,29 @@ ___
 **allowed methods** : PUT
 <br>**Access Level** : Authorized users
 <br>**fields :** 'optional': {'username', 'first_name', 'last_name', 'email'}
-<br>*PUT :* the uniqueness of email and username handeled.
+<br>*PUT :*  should include the authorized user access token. the uniqueness of email and username handeled.
 
 ### auth/logout/
 **allowed methods** : POST
 <br>**Access Level** : Authorized users
 <br>**fields :** 'required': {'refresh_token'}
-<br>*POST :* post user refresh token to expire the access and refresh token of the given user.
+<br>*POST :* should include the authorized user access token. post user refresh token with 'refresh_token' key to expire the access and refresh token of the given user.
 
-### auth/change_image/
+### auth/change_image/{pk}/
 **allowed methods** : PUT
 <br>**Access Level** : Authorized users
 <br>**fields :** 'required': {'image'}
+<br>*PUT :* should include the authorized user access token
 
 ---
 # To-Do:
 - [x] add users and configurations
 - [x] add cors and configurations
 - [ ] Make the cart
+- [ ] add the math operations for quantity
+- [ ] narrow the products to 'Available'
+- [ ] add educational blog
+- [ ] add support 
 - [x] Add JWT authentication ystem
 - [x] add product api
 - [ ] add billing part
