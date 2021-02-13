@@ -105,23 +105,22 @@ ___
 # To-Do:
 - [x] add users and configurations
 - [x] add CORS and configurations
-- [ ] add CSRF and configurations
 - [x] Make the cart
-- [ ] add the math operations for quantity
-- [ ] narrow the products to 'Available'
-- [ ] add educational blog
-- [ ] add support 
 - [x] Add JWT authentication ystem
 - [x] add cors and configurations
-- [ ] Make the cart
-- [ ] calculate the quantity and valid products to buy
-- [ ] check for availability on get method for all products
-- [ ] add search option for product and category 
+- [x] check for availability on get method for all products
 - [x] Add JWT authentication system
 - [x] add product api
 - [x] add delete feature for cart
+- [x] add documentation
+- [ ] add CSRF and configurations
+- [ ] add the math operations for quantity
+- [ ] add educational blog
+- [ ] add support 
+- [ ] Make the cart
+- [ ] calculate the quantity and valid products to buy
+- [ ] add search option for product and category 
 - [ ] add billing part
 - [ ] third party register
 - [ ] beautify the code
-- [x] add documentation
 - [ ] add the frontend
