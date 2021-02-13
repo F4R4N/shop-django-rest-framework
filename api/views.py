@@ -1,5 +1,4 @@
 from rest_framework import viewsets, permissions, generics, status
-from rest_framework.permissions import IsAuthenticated
 from .models import Product, Category, CartItem, Profile
 from .serializers import ProductSerializer, CategorySerializer, CartItemSerializer, UserSerializer, CartItemAddSerializer
 from django.contrib.auth.models import User
@@ -7,9 +6,11 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
+
 class ProductView(viewsets.ModelViewSet):
     queryset = Product.available.all()
     serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class CategoryView(viewsets.ModelViewSet):
@@ -25,7 +26,7 @@ class UserView(viewsets.ModelViewSet):
 
 class CartItemView(generics.ListAPIView):
     serializer_class = CartItemSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, )
     
     def get_queryset(self):
         user = self.request.user
@@ -34,7 +35,7 @@ class CartItemView(generics.ListAPIView):
 class CartItemAddView(generics.CreateAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemAddSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, )
 
 class CartItemDelView(generics.DestroyAPIView):
     queryset = CartItem.objects.all()

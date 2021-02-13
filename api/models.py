@@ -27,7 +27,7 @@ class Category(models.Model):
 
 class AvailableManager(models.Manager):
     def get_queryset(self):
-        return super(AvailableManager, self).get_queryset().filter(is_available=True)
+        return super(AvailableManager, self).get_queryset().filter(is_available=True, quantity__gte=1)
 
 class Product(models.Model):
     name = models.CharField(max_length=150, unique=True, null=False, blank=False )

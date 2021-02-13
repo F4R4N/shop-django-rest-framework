@@ -20,6 +20,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', "name", "slug", "category", "price", "discount", "available", "quantity", "created", "image",
                   "description")
 
+
 class UserSerializer(serializers.ModelSerializer):
     """ serializer for user that serialize : \n(
             'id', 'username', 'first_name', 'last_name', 'email', 'image', 'is_staff', 'is_active', 'is_superuser')\nbased on default 'User' model """
@@ -54,11 +55,15 @@ class CartItemAddSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.get(id=self.context['request'].user.id)
         product = get_object_or_404(Product, id=validated_data['product_id'])
+        if product.quantity == 0 or product.is_available == False:
+            raise serializers.ValidationsError({'not available': 'the product is not available.'})
+
         cart_item = CartItem.objects.create(
             product=product,
             user=user,
             quantity=validated_data['quantity']
             )
-
         cart_item.save()
+        product.quantity - validated_data['quantity']
+        product.save()
         return cart_item
