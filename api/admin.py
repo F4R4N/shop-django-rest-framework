@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 class ProductAdmin(admin.ModelAdmin):
     """ adding the product class to the admin site """
 
-    list_display = ('name', "price", "quantity", "available", 'created',"discount")
+    list_display = ('name', "price", "quantity", "is_available", 'created',"discount")
     search_fields = ("name", "category",)
     date_hierarchy = "created"
-    list_editable = ['price', 'available', 'quantity', "discount"]
+    list_editable = ['price', 'is_available', 'quantity', "discount"]
     prepopulated_fields = {'slug': ("name",)}
 
 
