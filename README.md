@@ -104,7 +104,6 @@ ___
 ---
 # To-Do:
 - [x] add users and configurations
-<<<<<<< HEAD
 - [x] add CORS and configurations
 - [ ] add CSRF and configurations
 - [x] Make the cart
@@ -113,14 +112,12 @@ ___
 - [ ] add educational blog
 - [ ] add support 
 - [x] Add JWT authentication ystem
-=======
 - [x] add cors and configurations
 - [ ] Make the cart
 - [ ] calculate the quantity and valid products to buy
 - [ ] check for availability on get method for all products
 - [ ] add search option for product and category 
 - [x] Add JWT authentication system
->>>>>>> bf485d37f14b78044e4cc9be951dae375a93075d
 - [x] add product api
 - [x] add delete feature for cart
 - [ ] add billing part
