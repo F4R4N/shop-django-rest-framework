@@ -104,15 +104,18 @@ ___
 ---
 # To-Do:
 - [x] add users and configurations
-- [x] add cors and configurations
-- [ ] Make the cart
+- [x] add CORS and configurations
+- [ ] add CSRF and configurations
+- [x] Make the cart
 - [ ] add the math operations for quantity
 - [ ] narrow the products to 'Available'
 - [ ] add educational blog
 - [ ] add support 
 - [x] Add JWT authentication ystem
 - [x] add product api
+- [x] add delete feature for cart
 - [ ] add billing part
+- [ ] third party register
 - [ ] beautify the code
-- [ ] add documentation
+- [x] add documentation
 - [ ] add the frontend
