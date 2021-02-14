@@ -131,12 +131,12 @@ ___
 - [x] add product api
 - [x] add delete feature for cart
 - [x] add documentation
-- [ ] add CSRF and configurations
-- [ ] add the math operations for quantity
+- [x] add CSRF and configurations
+- [x] add the math operations for quantity
 - [ ] add educational blog
 - [ ] add support 
-- [ ] Make the cart
-- [ ] calculate the quantity and valid products to buy
+- [x] Make the cart
+- [x] calculate the quantity and valid products to buy
 - [ ] add search option for product and category 
 - [ ] add billing part
 - [ ] third party register
