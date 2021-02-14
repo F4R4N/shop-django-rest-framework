@@ -1,7 +1,7 @@
 # shop django rest framework
 a shop api with django rest framework
 
-## Instalation
+## installation
 1. install python3 from <a href="https://www.python.org/" target="_blank">here</a> 
 1. pip install -r requirements.txt
 1. python manage.py migrate
