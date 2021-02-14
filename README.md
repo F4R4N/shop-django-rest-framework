@@ -141,4 +141,4 @@ ___
 - [ ] add billing part
 - [ ] add educational blog
 - [ ] beautify the code
-- [\] add the frontend
+- [ ] add the frontend
