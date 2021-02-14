@@ -1,7 +1,7 @@
 # shop django rest framework
 a shop api with django rest framework
 
-## Instalation
+## installation
 1. install python3 from <a href="https://www.python.org/" target="_blank">here</a> 
 1. pip install -r requirements.txt
 1. python manage.py migrate
@@ -35,14 +35,14 @@ ___
 ### api/v1/product/
 **Allowed Methods** : GET
 <br>**Access Level** : Public
-<br>return array of objects of all products in database that tagged as available. and also have a nested inner object of category that related to it as ForignKey relation.
-<br>you can get specific product object with passing the pk to the end of the path.
+<br>return array of objects of all products in the database that tagged as available. and also have a nested inner object of category that related to it as ForignKey relation.
+<br>you can get a specific product object with passing the pk to the end of the path.
 
 ### api/v1/category/
 **allowed methods** : GET
 <br>**Access Level** : Public
 <br>return objects of categories that admin made.
-<br>you can get specific category object with passing the pk to the end of the path.
+<br>you can get a specific category object with passing the pk to the end of the path.
 
 ### api/v1/user/
 **allowed methods** : GET
@@ -59,7 +59,7 @@ ___
 **allowed methods** : POST
 <br>**Access Level** : Authorized users
 <br>**fields :** 'required': {'quantity', 'product_id'}
-<br>*POST :* the data should include fields available if user authorized.
+<br>*POST :* The data should include fields available if user authorized.
 
 ### api/v1/cart/delete/{pk}/
 **allowed methods** : DELETE
@@ -87,25 +87,25 @@ ___
 **allowed methods** : POST
 <br>**Access Level** : Public
 <br>**fields :** 'required': {'refresh'}
-<br>*POST :* the data you post should include 'refresh' and the value of it should be refresh token that send when user login.
+<br>*POST :* the data you post should include 'refresh' and the value of it should be user refresh token that is sent when user login.
 
 ### auth/register/
 **allowed methods** : POST
 <br>**Access Level** : Public
 <br>**fields :** 'required': {'username', 'password1', 'password2', 'email', 'first_name', 'last_name'}
-<br>*POST :* should include the 'fields' keys and proper value. errors and exeptions handled , should have a proper place to show them in frontend.
+<br>*POST :* should include the 'fields' keys and proper value. errors and exceptions handled , should have a proper place to show them in frontend.
 
 ### auth/change_password/{pk}/
 **allowed methods** : PUT
 <br>**Access Level** : Authorized users
 <br>**fields :** 'required': {'old_password', 'password1', 'password2'}
-<br>*PUT :* sould include 'fields' keys with proper values. errors and exeptions handled , should have a proper place to show them in frontend.
+<br>*PUT :* should include 'fields' keys with proper values. errors and exceptions handled , should have a proper place to show them in frontend.
 
 ### auth/update_profile/{pk}/
 **allowed methods** : PUT
 <br>**Access Level** : Authorized users
 <br>**fields :** 'optional': {'username', 'first_name', 'last_name', 'email'}
-<br>*PUT :*  should include the authorized user access token. the uniqueness of email and username handeled.
+<br>*PUT :*  should include the authorized user access token. the uniqueness of email and username handled.
 
 ### auth/logout/
 **allowed methods** : POST
@@ -124,7 +124,7 @@ ___
 - [x] add users and configurations
 - [x] add CORS and configurations
 - [x] Make the cart
-- [x] Add JWT authentication ystem
+- [x] Add JWT authentication system
 - [x] add cors and configurations
 - [x] check for availability on get method for all products
 - [x] Add JWT authentication system
