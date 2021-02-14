@@ -133,12 +133,12 @@ ___
 - [x] add documentation
 - [x] add CSRF and configurations
 - [x] add the math operations for quantity
-- [ ] add educational blog
-- [ ] add support 
 - [x] Make the cart
 - [x] calculate the quantity and valid products to buy
 - [ ] add search option for product and category 
-- [ ] add billing part
 - [ ] third party register
+- [ ] add support 
+- [ ] add billing part
+- [ ] add educational blog
 - [ ] beautify the code
-- [ ] add the frontend
+- [\] add the frontend
