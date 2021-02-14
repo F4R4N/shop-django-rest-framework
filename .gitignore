@@ -7,4 +7,5 @@ auth/__pycache__/
 config/__pycache__/
 test*
 .idea/
+favicon.ico
 
