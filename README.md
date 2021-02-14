@@ -15,7 +15,10 @@ a shop api with django rest framework
 	* [**api/v1/category/**](#apiv1category) 
 	* [**api/v1/user/**](#apiv1user) 
 	* [**api/v1/cart/**](#apiv1cart) 
-	* [**api/v1/cart/add/**](#apiv1cartadd) 
+	* [**api/v1/cart/add/**](#apiv1cartadd)
+	* [**api/v1/cart/delete/{pk}/**](#apiv1cartdeletepk)
+	* [**api/v1/cart/add_one/{pk}/**](#apiv1cartadd_onepk)
+	* [**api/v1/cart/reduce_one/{pk}/**](#apiv1cartreduce_onepk)
 
 
 * [**auth/**](#auth)
@@ -57,6 +60,21 @@ ___
 <br>**Access Level** : Authorized users
 <br>**fields :** 'required': {'quantity', 'product_id'}
 <br>*POST :* the data should include fields available if user authorized.
+
+### api/v1/cart/delete/{pk}/
+**allowed methods** : DELETE
+<br>**Access Level** : Authorized users
+<br>*DELETE :* there is no data to send. you should put the pk of products that are in user cart you want to delete in the url instead of *{pk}*
+
+### api/v1/cart/add_one/{pk}/
+**allowed methods** : GET
+<br>**Access Level** : Authorized users
+<br>*GET :* there is no data to send. you should put the pk of products that are in user cart you want to add one to it in the url instead of *{pk}*
+
+### api/v1/cart/reduce_one/{pk}/
+**allowed methods** : GET
+<br>**Access Level** : Authorized users
+<br>*GET :* there is no data to send. you should put the pk of products that are in user cart you want to reduce one from it in the url instead of *{pk}*
 
 ## auth/
 ### auth/login/
