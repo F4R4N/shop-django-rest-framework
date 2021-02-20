@@ -36,10 +36,10 @@ class Product(models.Model):
     name = models.CharField(max_length=150, unique=True, null=False, blank=False )
     slug = models.SlugField(unique=True, null=False, blank=False)
     category = models.ManyToManyField(Category, related_name='products')
-    price = models.IntegerField()
-    discount = models.IntegerField(default=0)
+    price = models.PositiveIntegerField()
+    discount = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=True)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     objects = models.Manager()
     available = AvailableManager()
     created = models.DateTimeField(auto_now_add=True )
@@ -54,6 +54,7 @@ class Product(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     image = models.ImageField(upload_to=user_images, default='profile/default/default.png')
+    total_price = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.user.username
@@ -62,13 +63,17 @@ class Profile(models.Model):
 class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.product.name
 
-    def get_total_price(self):
-        return self.quantity * self.product.price
+    def add_amount(self):
+        amount = self.product.price * self.quantity
+        profile = self.user.profile
+        profile.total_price = profile.total_price + amount
+        profile.save()
+        return True
 
 
 @receiver(post_delete, sender=Profile)

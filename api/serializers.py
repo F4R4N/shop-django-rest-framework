@@ -64,6 +64,7 @@ class CartItemAddSerializer(serializers.ModelSerializer):
             quantity=validated_data['quantity']
             )
         cart_item.save()
+        cart_item.add_amount()
         product.quantity = product.quantity - cart_item.quantity
         product.save()
         return cart_item
