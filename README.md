@@ -51,7 +51,7 @@ ___
 <br>you can get specific user object with passing the pk to the end of the path.
 
 ### api/v1/cart/
-**allowed methods** : GET, POST
+**allowed methods** : GET
 <br>**Access Level** : Authorized users
 <br>*GET :* return all products in the authenticated user cart
 

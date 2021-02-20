@@ -11,18 +11,20 @@ class ProductView(viewsets.ModelViewSet):
     queryset = Product.available.all()
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
+    http_method_names = ['get', 'head', 'options']
 
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
+    http_method_names = ['get', 'head', 'options']
+    
 
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
-
+    http_method_names = ['get', 'head', 'options']
+    
 
 class CartItemView(generics.ListAPIView):
     serializer_class = CartItemSerializer
