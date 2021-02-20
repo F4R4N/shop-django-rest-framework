@@ -5,6 +5,15 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework import filters
+
+
+class CategoryView(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    http_method_names = ['get', 'head', 'options']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
 
 class ProductView(viewsets.ModelViewSet):
@@ -12,13 +21,10 @@ class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     http_method_names = ['get', 'head', 'options']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'description', 'category__name']
 
-class CategoryView(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    http_method_names = ['get', 'head', 'options']
     
-
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -29,10 +35,13 @@ class UserView(viewsets.ModelViewSet):
 class CartItemView(generics.ListAPIView):
     serializer_class = CartItemSerializer
     permission_classes = (permissions.IsAuthenticated, )
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['product__name', 'product__description', 'product__category__name']
     
     def get_queryset(self):
         user = self.request.user
         return CartItem.objects.filter(user=user)
+
 
 class CartItemAddView(generics.CreateAPIView):
     queryset = CartItem.objects.all()
@@ -52,6 +61,7 @@ class CartItemDelView(generics.DestroyAPIView):
         product.save()
         target_product.delete()
         return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})
+
 
 class CartItemAddOneView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
@@ -73,6 +83,7 @@ class CartItemAddOneView(APIView):
             "detail": 'one object added', 
             "code": "done"
             })
+
 
 class CartItemReduceOneView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
