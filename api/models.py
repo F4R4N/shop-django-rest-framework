@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models.signals import post_delete
+from django.dispatch.dispatcher import receiver
 from datetime import datetime
+import os
 
 
 def product_image(instance, filename):
@@ -9,7 +11,8 @@ def product_image(instance, filename):
 
 
 def user_images(instance, filename):
-    return 'profile/{0}/{1}.jpg'.format(instance.user.username, filename)
+    saved_file_name = instance.user.username + "-" + datetime.now().strftime("%Y_%m_%d") + ".jpg"
+    return 'profile/{0}/{1}.jpg'.format(instance.user.username, saved_file_name)
 
 
 class Category(models.Model):
@@ -66,3 +69,14 @@ class CartItem(models.Model):
 
     def get_total_price(self):
         return self.quantity * self.product.price
+
+
+@receiver(post_delete, sender=Profile)
+def profile_image_delete(sender, instance, **kwargs):
+    if instance.image:
+        instance.image.delete(True)
+
+@receiver(post_delete, sender=Product)
+def product_image_delete(sender, instance, **kwargs):
+    if instance.image:
+        instance.image.delete(True)
