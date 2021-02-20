@@ -12,9 +12,12 @@ a shop api with django rest framework
 # api paths
 * [**api/v1/**](#apiv1)
 	* [**api/v1/product/**](#apiv1product)
-	* [**api/v1/category/**](#apiv1category) 
+		* [**api/v1/product/?search={query}**](#apiv1productsearchquery)
+	* [**api/v1/category/**](#apiv1category)
+		* [**api/v1/category/?search={query}**](#apiv1categorysearchquery)
 	* [**api/v1/user/**](#apiv1user) 
-	* [**api/v1/cart/**](#apiv1cart) 
+	* [**api/v1/cart/**](#apiv1cart)
+		* [**api/v1/cart/?search={query}**](#apiv1cartsearchquery)
 	* [**api/v1/cart/add/**](#apiv1cartadd)
 	* [**api/v1/cart/delete/{pk}/**](#apiv1cartdeletepk)
 	* [**api/v1/cart/add_one/{pk}/**](#apiv1cartadd_onepk)
@@ -39,11 +42,25 @@ ___
 <br>return array of objects of all products in the database that tagged as available. and also have a nested inner object of category that related to it as ForignKey relation.
 <br>you can get a specific product object with passing the pk to the end of the path.
 
+#### api/v1/product/?search={query}
+**Allowed Methods** : GET
+<br>**Access Level** : Public
+<br>search in products by given keywords
+<br>search by "search" keyword
+
+
 ### api/v1/category/
 **allowed methods** : GET
 <br>**Access Level** : Public
 <br>return objects of categories that admin made.
 <br>you can get a specific category object with passing the pk to the end of the path.
+
+#### api/v1/category/?search={query}
+**Allowed Methods** : GET
+<br>**Access Level** : Public
+<br>search in categories by given keywords
+<br>search by "search" keyword
+
 
 ### api/v1/user/
 **allowed methods** : GET
@@ -51,10 +68,18 @@ ___
 <br>return object of all registered users
 <br>you can get specific user object with passing the pk to the end of the path.
 
+
 ### api/v1/cart/
 **allowed methods** : GET
 <br>**Access Level** : Authorized users
 <br>*GET :* return all products in the authenticated user cart
+
+#### api/v1/cart/?search={query}
+**Allowed Methods** : GET
+<br>**Access Level** : Authorized users
+<br>search in user cartitem by given keywords
+<br>search by "search" keyword
+
 
 ### api/v1/cart/add/
 **allowed methods** : POST
@@ -76,6 +101,7 @@ ___
 **allowed methods** : GET
 <br>**Access Level** : Authorized users
 <br>*GET :* there is no data to send. you should put the pk of products that are in user cart you want to reduce one from it in the url instead of *{pk}*
+
 
 ## auth/
 ### auth/login/
@@ -144,7 +170,7 @@ ___
 - [x] add the math operations for quantity
 - [x] Make the cart
 - [x] calculate the quantity and valid products to buy
-- [ ] add search option for product and category 
+- [x] add search option for product and category 
 - [ ] third party register
 - [ ] add support 
 - [ ] add billing part
