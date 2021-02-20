@@ -10,30 +10,25 @@ from rest_framework import status
 from api.models import Profile
 from django.shortcuts import get_object_or_404
 
-
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
-
 
 class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
 
-
 class UpdateProfileView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateUserSerializer
 
-
 class UpdateUserImageView(generics.UpdateAPIView):
     queryset = Profile.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateUserImageSerializer
-
 
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -48,10 +43,8 @@ class LogoutView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-
 class DeleteProfile(APIView):
     permission_classes = (IsAuthenticated,)
-
     def delete(self, request, pk, format=None):
         user = request.user
         if user.pk != pk:
@@ -59,4 +52,3 @@ class DeleteProfile(APIView):
         validated_user = get_object_or_404(User, pk=pk)
         validated_user.delete()
         return Response(data={"detail": "deleted"}, status=status.HTTP_200_OK)
-

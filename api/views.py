@@ -7,14 +7,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import filters
 
-
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     http_method_names = ['get', 'head', 'options']
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
-
 
 class ProductView(viewsets.ModelViewSet):
     queryset = Product.available.all()
@@ -24,13 +22,11 @@ class ProductView(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'description', 'category__name']
 
-    
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
     http_method_names = ['get', 'head', 'options']
-    
 
 class CartItemView(generics.ListAPIView):
     serializer_class = CartItemSerializer
@@ -42,12 +38,10 @@ class CartItemView(generics.ListAPIView):
         user = self.request.user
         return CartItem.objects.filter(user=user)
 
-
 class CartItemAddView(generics.CreateAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemAddSerializer
     permission_classes = (permissions.IsAuthenticated, )
-
 
 class CartItemDelView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, )
@@ -61,7 +55,6 @@ class CartItemDelView(generics.DestroyAPIView):
         product.save()
         target_product.delete()
         return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})
-
 
 class CartItemAddOneView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
@@ -83,7 +76,6 @@ class CartItemAddOneView(APIView):
             "detail": 'one object added', 
             "code": "done"
             })
-
 
 class CartItemReduceOneView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
