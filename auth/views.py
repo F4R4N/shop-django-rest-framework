@@ -8,6 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
 from api.models import Profile
+from django.shortcuts import get_object_or_404
 
 
 class RegisterView(generics.CreateAPIView):
@@ -46,3 +47,16 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteProfile(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def delete(self, request, pk, format=None):
+        user = request.user
+        if user.pk != pk:
+            return Response(data={"detail": "un-authorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        validated_user = get_object_or_404(User, pk=pk)
+        validated_user.delete()
+        return Response(data={"detail": "deleted"}, status=status.HTTP_200_OK)
+
