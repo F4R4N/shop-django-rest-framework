@@ -29,6 +29,7 @@ a shop api with django rest framework
 	* [**auth/update_profile/{pk}/**](#authupdate_profilepk)
 	* [**auth/logout/**](#authlogout)
 	* [**auth/change_image/**](#authchange_image)
+	* [**auth/delete_profile/{pk}/**](#authdelete_profilepk)
 
 ___	
 ## api/v1/
@@ -118,6 +119,14 @@ ___
 <br>**Access Level** : Authorized users
 <br>**fields :** 'required': {'image'}
 <br>*PUT :* should include the authorized user access token
+
+### auth/delete_profile/{pk}/
+**allowed methods** : DELETE
+<br>**Access Level** : Authorized users
+<br>**fields :** no fields
+<br>*DELETE :* should pass the pk to the end of the url.
+
+
 
 ---
 # To-Do:
