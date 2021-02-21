@@ -149,8 +149,8 @@ ___
 ### auth/delete_profile/{pk}/
 **allowed methods** : DELETE
 <br>**Access Level** : Authorized users
-<br>**fields :** no fields
-<br>*DELETE :* should pass the pk to the end of the url.
+<br>**fields :** 'required': {'password'}
+<br>*DELETE :* should pass the pk to the end of the url. and also user password to authorize the user .
 
 
 
