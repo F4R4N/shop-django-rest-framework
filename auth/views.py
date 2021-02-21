@@ -1,7 +1,7 @@
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
-from .serializers import RegisterSerializer, ChangePasswordSerializer, UpdateUserSerializer, UpdateUserImageSerializer
+from .serializers import RegisterSerializer, ChangePasswordSerializer, UpdateProfileSerializer, UpdateUserImageSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -23,7 +23,7 @@ class ChangePasswordView(generics.UpdateAPIView):
 class UpdateProfileView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = UpdateUserSerializer
+    serializer_class = UpdateProfileSerializer
 
 class UpdateUserImageView(generics.UpdateAPIView):
     queryset = Profile.objects.all()
@@ -43,12 +43,17 @@ class LogoutView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# TODO: fix the forin key constrant faild error on delete user object
 class DeleteProfile(APIView):
     permission_classes = (IsAuthenticated,)
     def delete(self, request, pk, format=None):
         user = request.user
         if user.pk != pk:
-            return Response(data={"detail": "un-authorized"}, status=status.HTTP_401_UNAUTHORIZED)
-        validated_user = get_object_or_404(User, pk=pk)
-        validated_user.delete()
-        return Response(data={"detail": "deleted"}, status=status.HTTP_200_OK)
+            return Response(data={"detail": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        if not 'password' in request.data:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'detail': 'password-required'})
+        if not user.check_password(request.data['password']):
+            return Response(status=status.HTTP_403_FORBIDDEN, data={'detail': "password-incorrect"})
+
+        user.delete()
+        return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})
