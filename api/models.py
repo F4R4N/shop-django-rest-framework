@@ -14,6 +14,9 @@ def user_images(instance, filename):
     saved_file_name = instance.user.username + "-" + datetime.now().strftime("%Y_%m_%d") + ".jpg"
     return 'profile/{0}/{1}.jpg'.format(instance.user.username, saved_file_name)
 
+def get_superuser():
+    user = User.objects.filter(is_superuser=True).first()
+    return user
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
@@ -27,6 +30,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
 
 class AvailableManager(models.Manager):
     def get_queryset(self):
@@ -43,7 +48,7 @@ class Product(models.Model):
     objects = models.Manager()
     available = AvailableManager()
     created = models.DateTimeField(auto_now_add=True )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET(get_superuser))
     image = models.ImageField(upload_to=product_image)
     description = models.TextField()
 

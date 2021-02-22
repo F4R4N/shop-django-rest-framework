@@ -1,5 +1,6 @@
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 from django.contrib.auth.models import User
 from .serializers import RegisterSerializer, ChangePasswordSerializer, UpdateProfileSerializer, UpdateUserImageSerializer
 from rest_framework import generics
@@ -54,6 +55,9 @@ class DeleteProfile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={'detail': 'password-required'})
         if not user.check_password(request.data['password']):
             return Response(status=status.HTTP_403_FORBIDDEN, data={'detail': "password-incorrect"})
+        tokens = OutstandingToken.objects.filter(user__id=user.id)
+        for token in tokens:
+            t, n = BlacklistedToken.objects.get_or_create(token=token)
 
         user.delete()
         return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})
