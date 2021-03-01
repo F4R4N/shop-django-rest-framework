@@ -18,6 +18,7 @@ from .serializers import RegisterSerializer, ChangePasswordSerializer, UpdatePro
 import random
 
 class RegisterView(generics.CreateAPIView):
+    """  """
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
@@ -84,6 +85,8 @@ class ForgotPasswordView(APIView):
         send_email = EmailMessage(mail_subject, message, to=[to_email]).send()
         request.session['code'] = server_code
         request.session['user'] = user.username
+        print(request.session['code'])
+        print(request.session['user'])
         return Response(status=status.HTTP_200_OK, data={'detail': "sent"})
 
 class ValidateConfirmationCodeView(APIView):
@@ -99,6 +102,7 @@ class ValidateConfirmationCodeView(APIView):
         return Response(status=status.HTTP_200_OK, data={'pk': get_object_or_404(User, username=request.session['user']).pk})
 
 class ResetPasswordView(APIView):
+    """ """
     permission_classes = (AllowAny,)
 
     def put(self, request, pk, format=None):
@@ -112,7 +116,3 @@ class ResetPasswordView(APIView):
         user.set_password(request.data['password'])
         user.save()
         return Response(status=status.HTTP_200_OK, data={'detail': 'done'})
-
-
-
-

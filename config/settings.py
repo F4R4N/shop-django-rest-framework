@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'api.apps.ApiConfig',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,15 @@ EMAIL_HOST = SMTP
 EMAIL_PORT = 587
 EMAIL_HOST_USER = EMAIL
 EMAIL_HOST_PASSWORD = PASSWORD
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+
+}
