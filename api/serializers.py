@@ -28,8 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id', 'username', 'first_name', 'last_name', 'email', 'image', 'is_staff', 'is_active', 'is_superuser')
-    image = serializers.ImageField(source='profile.image')
-
+    image = serializers.ImageField(source='profile.image', required=False)
 
 
 class CartItemSerializer(serializers.ModelSerializer):
