@@ -2,6 +2,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import generics, validators, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -13,7 +14,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
 from api.models import Profile
-from .serializers import RegisterSerializer, ChangePasswordSerializer, UpdateProfileSerializer, UpdateUserImageSerializer
+from .serializers import RegisterSerializer, ChangePasswordSerializer, UpdateProfileSerializer
 
 import random
 
@@ -22,8 +23,9 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
-
+    
 class ChangePasswordView(generics.UpdateAPIView):
+    """  """
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
@@ -33,10 +35,26 @@ class UpdateProfileView(generics.UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateProfileSerializer
 
-class UpdateUserImageView(generics.UpdateAPIView):
-    queryset = Profile.objects.all()
+class UpdateUserImageView(APIView):
+    parser_classes = (MultiPartParser, )
     permission_classes = (IsAuthenticated,)
-    serializer_class = UpdateUserImageSerializer
+    def put(self, request, pk, format=None):
+        user = request.user
+        if user.pk != pk:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={
+                'detail':{
+                    "authorize": "you dont have permission for this user !"
+                    }
+                })
+        if 'image' in request.data:
+            profile = get_object_or_404(Profile, pk=pk)
+            print("hi there")
+            profile.image = request.data['image']
+            profile.user = user
+            profile.save()
+            return Response(status=status.HTTP_200_OK, data={"detail": 'modified'})
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND,data={'detail': {'not-valid': 'the image field data is missing'}})
 
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
