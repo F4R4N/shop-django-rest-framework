@@ -10,15 +10,14 @@ from rest_framework import filters
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    http_method_names = ['get', 'head', 'options']
+    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
 
 class ProductView(viewsets.ModelViewSet):
     queryset = Product.available.all()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    http_method_names = ['get', 'head', 'options']
+    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'description', 'category__name']
 
@@ -26,7 +25,6 @@ class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
-    http_method_names = ['get', 'head', 'options']
 
 class CartItemView(generics.ListAPIView):
     serializer_class = CartItemSerializer
