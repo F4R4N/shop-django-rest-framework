@@ -3,16 +3,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
 from datetime import datetime
-import os
-
 
 def product_image(instance, filename):
     return 'images/{0}.jpg'.format(instance.slug)
 
 
 def user_images(instance, filename):
-    saved_file_name = instance.user.username + "-" + datetime.now().strftime("%Y_%m_%d") + ".jpg"
-    return 'profile/{0}/{1}.jpg'.format(instance.user.username, saved_file_name)
+    saved_file_name = instance.user.username + "-" + datetime.now().strftime("%Y_%m_%d,%H:%M:%S") + ".jpg"
+    return 'profile/{0}/{1}'.format(instance.user.username, saved_file_name)
 
 def get_superuser():
     user = User.objects.filter(is_superuser=True).first()
