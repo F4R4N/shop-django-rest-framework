@@ -48,7 +48,6 @@ class UpdateUserImageView(APIView):
                 })
         if 'image' in request.data:
             profile = get_object_or_404(Profile, pk=pk)
-            print("hi there")
             profile.image = request.data['image']
             profile.user = user
             profile.save()
@@ -103,8 +102,6 @@ class ForgotPasswordView(APIView):
         send_email = EmailMessage(mail_subject, message, to=[to_email]).send()
         request.session['code'] = server_code
         request.session['user'] = user.username
-        print(request.session['code'])
-        print(request.session['user'])
         return Response(status=status.HTTP_200_OK, data={'detail': "sent"})
 
 class ValidateConfirmationCodeView(APIView):
