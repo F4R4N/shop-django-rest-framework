@@ -1,48 +1,60 @@
-from rest_framework import viewsets, permissions, generics, status, exceptions
-from .models import Product, Category, CartItem, Profile
-from .serializers import ProductSerializer, CategorySerializer, CartItemSerializer, UserSerializer, CartItemAddSerializer
+from rest_framework import viewsets, permissions, generics, status
+from .models import Product, Category, CartItem
+from .serializers import (
+    ProductSerializer, CategorySerializer, CartItemSerializer, UserSerializer,
+    CartItemAddSerializer)
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import filters
 
+
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [
+        permissions.IsAdminUser, permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
+
 
 class ProductView(viewsets.ModelViewSet):
     queryset = Product.available.all()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [
+        permissions.IsAdminUser, permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'description', 'category__name']
+
 
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
+
 class CartItemView(generics.ListAPIView):
     serializer_class = CartItemSerializer
     permission_classes = (permissions.IsAuthenticated, )
     filter_backends = [filters.SearchFilter]
-    search_fields = ['product__name', 'product__description', 'product__category__name']
-    
+    search_fields = [
+        'product__name', 'product__description', 'product__category__name']
+
     def get_queryset(self):
         user = self.request.user
         return CartItem.objects.filter(user=user)
+
 
 class CartItemAddView(generics.CreateAPIView):
     queryset = CartItem.objects.all()
     serializer_class = CartItemAddSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
+
 class CartItemDelView(generics.DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, )
+    queryset = CartItem.objects.all()
 
     def delete(self, request, pk, format=None):
         user = request.user
@@ -54,6 +66,7 @@ class CartItemDelView(generics.DestroyAPIView):
         target_product.delete()
         return Response(status=status.HTTP_200_OK, data={"detail": "deleted"})
 
+
 class CartItemAddOneView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
 
@@ -63,17 +76,19 @@ class CartItemAddOneView(APIView):
         target_product = cart_item.get(pk=pk)
         product = get_object_or_404(Product, id=target_product.product.id)
         if product.quantity <= 0:
-            return Response(data={"detail": "this item is sold out try another one !", "code": "sold_out"})  
-        
+            return Response(
+                data={
+                    "detail": "this item is sold out try another one !",
+                    "code": "sold_out"})
+
         target_product.quantity = target_product.quantity + 1
         product.quantity = product.quantity - 1
         product.save()
         target_product.save()
-        return Response(status=status.HTTP_226_IM_USED,
-            data={
-            "detail": 'one object added', 
-            "code": "done"
-            })
+        return Response(
+            status=status.HTTP_226_IM_USED,
+            data={"detail": 'one object added', "code": "done"})
+
 
 class CartItemReduceOneView(APIView):
     permission_classes = (permissions.IsAuthenticated, )
@@ -84,14 +99,18 @@ class CartItemReduceOneView(APIView):
         target_product = cart_item.get(pk=pk)
         product = get_object_or_404(Product, id=target_product.product.id)
         if target_product.quantity == 0:
-            return Response(data={"detail": "there is no more item like this in tour cart", "code": "no_more"})  
-        
+            return Response(
+                data={
+                    "detail": "there is no more item like this in tour cart",
+                    "code": "no_more"})
+
         target_product.quantity = target_product.quantity - 1
         product.quantity = product.quantity + 1
         product.save()
         target_product.save()
-        return Response(status=status.HTTP_226_IM_USED,
+        return Response(
+            status=status.HTTP_226_IM_USED,
             data={
-            "detail": 'one object deleted', 
-            "code": "done"
+                "detail": 'one object deleted',
+                "code": "done"
             })
