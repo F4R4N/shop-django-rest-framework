@@ -1,4 +1,3 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
@@ -7,13 +6,21 @@ from api.models import Profile
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=User.objects.all())])
-    password1 = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())])
+
+    password1 = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password])
+
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'email', 'first_name', 'last_name')
+        fields = (
+            'username', 'password1', 'password2', 'email', 'first_name',
+            'last_name')
+
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True},
@@ -21,7 +28,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password1'] != attrs['password2']:
-            raise serializers.ValidationError({'password1': "password field dont match !"})
+            raise serializers.ValidationError(
+                {'password1': "password field dont match !"})
 
         return attrs
 
@@ -35,7 +43,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         user.set_password(validated_data['password1'])
         profile = Profile.objects.create(user=user)
-    
+
         profile.save()
         user.save()
 
@@ -43,7 +51,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password1 = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password])
+
     password2 = serializers.CharField(write_only=True, required=True)
     old_password = serializers.CharField(write_only=True, required=True)
 
@@ -53,21 +63,24 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password1'] != attrs['password2']:
-            raise serializers.ValidationError({'password1': "password fields dont match !"})
+            raise serializers.ValidationError(
+                {'password1': "password fields dont match !"})
 
         return attrs
 
     def validate_old_password(self, value):
         user = self.context['request'].user
         if not user.check_password(value):
-            raise serializers.ValidationError({"old_password": "Old password is not correct !"})
+            raise serializers.ValidationError(
+                {"old_password": "Old password is not correct !"})
 
         return value
 
     def update(self, instance, validated_data):
         user = self.context['request'].user
         if user.pk != instance.pk:
-            raise serializers.ValidationError({"authorize": "You dont have permission for this user !"})
+            raise serializers.ValidationError(
+                {"authorize": "You dont have permission for this user !"})
 
         instance.set_password(validated_data['password1'])
         instance.save()
@@ -90,20 +103,25 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         user = self.context['request'].user
         if User.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "this email is already in use !"})
+            raise serializers.ValidationError(
+                {"email": "this email is already in use !"})
 
         return value
 
     def validate_username(self, value):
         user = self.context['request'].user
         if User.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "this username is not available !"})
+            raise serializers.ValidationError(
+                {"username": "this username is not available !"})
+
         return value
 
     def update(self, instance, validated_data):
         user = self.context['request'].user
         if user.pk != instance.pk:
-            raise serializers.ValidationError({"authorize": "you dont have permission for this user !"})
+            raise serializers.ValidationError(
+                {"authorize": "you dont have permission for this user !"})
+
         if 'first_name' in validated_data:
             instance.first_name = validated_data['first_name']
         if 'last_name' in validated_data:

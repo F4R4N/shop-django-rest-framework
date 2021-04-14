@@ -1,6 +1,11 @@
 from django.urls import path
-from auth.views import RegisterView, ChangePasswordView, UpdateProfileView, LogoutView, UpdateUserImageView, DeleteProfileView, ResetPasswordView, ValidateConfirmationCodeView, ForgotPasswordView 
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from auth.views import (
+    RegisterView, ChangePasswordView, UpdateProfileView, LogoutView,
+    UpdateUserImageView, DeleteProfileView, ResetPasswordView,
+    ValidateConfirmationCodeView, ForgotPasswordView)
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView, TokenRefreshView)
 
 app_name = 'auth'
 
