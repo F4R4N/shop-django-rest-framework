@@ -2,16 +2,12 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from .config import SMTP, EMAIL, PASSWORD
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+%)@i@fb@my)ma=zi5$*=46u-blu096hexw3qibit_p2j%nop7'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*', '192.168.1.129']
@@ -29,6 +25,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'api.apps.ApiConfig',
     'drf_yasg',
+    'contactus',
 ]
 
 MIDDLEWARE = [
@@ -106,12 +103,12 @@ REST_FRAMEWORK = {
     ],
 }
 
-SIMPLE_JWT= {
+SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
-    
+
 }
 
 CORS_ALLOW_CREDENTIALS = True
@@ -134,3 +131,4 @@ SWAGGER_SETTINGS = {
     }
 
 }
+APP_NAME = "shop"
